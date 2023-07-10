@@ -1,4 +1,3 @@
-import { app } from "@ratatouille/modules/app/main"
 import { Dependencies } from "@ratatouille/modules/store/dependencies"
 import React, { createContext, useContext } from "react"
 
@@ -9,7 +8,7 @@ export const DependenciesProvider: React.FC<{
   children: React.ReactNode
 }> = ({ dependencies, children }) => {
   return (
-    <DependenciesContext.Provider value={app.dependencies}>
+    <DependenciesContext.Provider value={dependencies}>
       {children}
     </DependenciesContext.Provider>
   )
