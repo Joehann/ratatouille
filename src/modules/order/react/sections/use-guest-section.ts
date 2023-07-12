@@ -5,27 +5,41 @@ import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/order
 
 export const useGuestSection = () => {
   const addGuest = () => {
-    const newState = guestForm.current.addGuest(guests)
-    setGuests(newState)
+    const newState = guestForm.current.addGuest(form)
+    setForm(newState)
   }
 
   const removeGuest = (id: string) => {
-    setGuests((guests) => guests.filter((guest) => guest.id !== id))
+    const newState = guestForm.current.removeGuest(form, id)
+    setForm(newState)
   }
 
-  const updateGuest = (id: string, key: string, value: any) => {}
+  const updateGuest = <T extends keyof OrderingDomainModel.Guest>(
+    id: string,
+    key: T,
+    value: OrderingDomainModel.Guest[T]
+  ) => {
+    const newState = guestForm.current.updateGuest(form, id, key, value)
+    setForm(newState)
+  }
 
-  const changeOrganizer = () => {}
+  const changeOrganizer = (id: string) => {
+    const newState = guestForm.current.changeOrganizer(form, id)
+    setForm(newState)
+  }
 
   const onNext = () => {}
 
   const isSubmittable = () => {
-    return false
+    return guestForm.current.isSubmittable(form)
   }
 
   const { idProvider } = useDependencies()
   const guestForm = useRef(new GuestForm(idProvider))
-  const [guests, setGuests] = useState<OrderingDomainModel.Guest[]>([])
+  const [form, setForm] = useState<OrderingDomainModel.Form>({
+    guests: [],
+    organizerId: null,
+  })
 
   return {
     addGuest,
@@ -34,6 +48,6 @@ export const useGuestSection = () => {
     changeOrganizer,
     onNext,
     isSubmittable,
-    guests,
+    form,
   }
 }
