@@ -2,6 +2,8 @@ import { useRef, useState } from "react"
 import { useDependencies } from "@ratatouille/modules/app/react/DependenciesProvider"
 import { GuestForm } from "@ratatouille/modules/order/core/form/guest.form"
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model"
+import { useAppDispatch } from "@ratatouille/modules/store/store"
+import { chooseGuests } from "@ratatouille/modules/order/core/usecases/chose-guests.usecase"
 
 export const useGuestSection = () => {
   const addGuest = () => {
@@ -28,12 +30,15 @@ export const useGuestSection = () => {
     setForm(newState)
   }
 
-  const onNext = () => {}
+  const onNext = () => {
+    dispatch(chooseGuests(form))
+  }
 
   const isSubmittable = () => {
     return guestForm.current.isSubmittable(form)
   }
 
+  const dispatch = useAppDispatch()
   const { idProvider } = useDependencies()
   const guestForm = useRef(new GuestForm(idProvider))
   const [form, setForm] = useState<OrderingDomainModel.Form>({
