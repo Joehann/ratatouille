@@ -12,8 +12,8 @@ import {
   Typography,
 } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { useGuestSection } from "@ratatouille/modules/order/react/sections/use-guest-section"
 import { OrderingDomainModel } from "@ratatouille/modules/order/core/model/ordering.domain-model"
+import { useGuestSection } from "@ratatouille/modules/order/react/sections/guest/use-guest-section"
 
 export const GuestsSection: React.FC<{}> = () => {
   const presenter = useGuestSection()
